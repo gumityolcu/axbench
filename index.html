@@ -40,8 +40,28 @@
       letter-spacing: 0;
     }
 
+    .authors {
+      margin: 0.55rem auto 0;
+      max-width: 640px;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .authors .equal {
+      font-size: 0.75rem;
+      vertical-align: super;
+      color: #888;
+    }
+
+    .authors .note {
+      display: block;
+      font-size: 0.78rem;
+      color: #999;
+      margin-top: 0.15rem;
+    }
+
     header p.tagline {
-      margin: 0.6rem auto 0;
+      margin: 0.7rem auto 0;
       max-width: 560px;
       color: #444;
       font-size: 1.05rem;
@@ -73,96 +93,116 @@
     .btn-paper   { background: #1a1a1a; color: #fff; }
     .btn-hf      { background: #ff9d00; color: #fff; }
     .btn-colab   { background: #f9ab00; color: #fff; }
+    .btn-gh      { background: #24292e; color: #fff; }
 
     .links a svg { flex-shrink: 0; }
 
     /* ── Main content ── */
     main {
-      max-width: 900px;
+      max-width: 940px;
       margin: 0 auto;
       padding: 2.5rem 1.5rem 4rem;
     }
 
-    /* ── Section ── */
-    .section-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 0.3rem;
-    }
-
-    .section-sub {
-      font-size: 0.85rem;
-      color: #666;
-      margin-bottom: 1rem;
+    /* ── Section card ── */
+    section {
+      background: #f8f8f8;
+      border: 1px solid #e4e4e4;
+      border-radius: 12px;
+      padding: 1.5rem 1.75rem 1.25rem;
     }
 
     section + section {
-      margin-top: 3rem;
+      margin-top: 1.75rem;
     }
 
-    /* ── Tables ── */
+    .section-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+
+    .section-sub {
+      font-size: 0.82rem;
+      color: #777;
+      margin-bottom: 1rem;
+    }
+
+    /* ── Scrollable table wrapper ── */
     .table-wrap {
       overflow-x: auto;
+      overflow-y: auto;
+      max-height: 380px;
+      border-radius: 8px;
+      border: 1px solid #e0e0e0;
+      background: #fff;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.9rem;
+      font-size: 0.875rem;
     }
 
+    /* Sticky header inside scroll */
     thead th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: #fff;
       text-align: right;
-      padding: 0.55rem 0.75rem;
-      border-bottom: 2px solid #1a1a1a;
+      padding: 0.6rem 0.85rem;
+      border-bottom: 2px solid #d0d0d0;
       white-space: nowrap;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: #555;
       text-transform: uppercase;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.04em;
     }
 
-    thead th:first-child {
-      text-align: left;
-    }
+    thead th:first-child  { text-align: center; width: 2.5rem; }
+    thead th:nth-child(2) { text-align: left; }
 
-    tbody tr:hover {
-      background: #f7f7f7;
-    }
+    tbody tr:hover { background: #fafafa; }
 
-    tbody tr + tr {
-      border-top: 1px solid #ebebeb;
-    }
+    tbody tr + tr { border-top: 1px solid #efefef; }
 
     tbody td {
-      padding: 0.55rem 0.75rem;
+      padding: 0.55rem 0.85rem;
       text-align: right;
       white-space: nowrap;
+      background: #fff;
     }
 
+    /* rank number column */
     tbody td:first-child {
+      text-align: center;
+      color: #aaa;
+      font-size: 0.78rem;
+      font-weight: 500;
+      width: 2.5rem;
+    }
+
+    /* method name column */
+    tbody td:nth-child(2) {
       text-align: left;
       font-weight: 500;
     }
 
-    /* rank-1 row */
-    tbody tr:first-child td {
-      font-weight: 600;
-    }
+    /* top row emphasis */
+    tbody tr:first-child td { font-weight: 600; }
+    tbody tr:first-child td:first-child { font-weight: 700; color: #888; }
 
-    /* bold best value */
     strong { font-weight: 700; }
-
-    /* dash / missing */
-    .dash { color: #bbb; }
+    .dash  { color: #ccc; }
 
     .notice {
-      margin-top: 0.6rem;
-      font-size: 0.82rem;
-      color: #888;
+      margin-top: 0.7rem;
+      font-size: 0.8rem;
+      color: #999;
     }
 
-    .notice a { color: #1a1a1a; }
+    .notice a { color: #555; }
 
     /* ── Footer ── */
     footer {
@@ -181,32 +221,40 @@
        src="https://github.com/user-attachments/assets/661f78cf-4044-4c46-9a71-1316bb2c69a5"
        alt="AxBench logo" />
   <h1>AxBench <sub>by <a href="https://github.com/stanfordnlp/pyvene" style="color:inherit;text-decoration:none;">pyvene</a></sub></h1>
+
+  <p class="authors">
+    Zhengxuan Wu<span class="equal">*</span>,
+    Aryaman Arora<span class="equal">*</span>,
+    Atticus Geiger,
+    Zheng Wang,
+    Jing Huang,
+    Dan Jurafsky,
+    Christopher D. Manning,
+    Christopher Potts
+    <span class="note">* equal contribution</span>
+  </p>
+
   <p class="tagline">
     A scalable benchmark for evaluating interpretability techniques on
     <em>concept detection</em> and <em>model steering</em>.
   </p>
 
   <div class="links">
-    <!-- Paper -->
     <a class="btn-paper" href="https://arxiv.org/abs/2501.17148" target="_blank" rel="noopener">
       <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
            viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
       Paper
     </a>
-    <!-- HuggingFace -->
     <a class="btn-hf" href="https://huggingface.co/collections/pyvene/axbench-release-6787576a14657bb1fc7a5117" target="_blank" rel="noopener">
-      <!-- HF emoji-style icon -->
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="9" r="2"/><circle cx="15" cy="9" r="2"/><path d="M12 17c-2.8 0-5-1.8-5-4h10c0 2.2-2.2 4-5 4z"/><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/></svg>
       HuggingFace
     </a>
-    <!-- Colab -->
     <a class="btn-colab" href="https://colab.research.google.com/github/stanfordnlp/axbench/blob/main/axbench/examples/tutorial.ipynb" target="_blank" rel="noopener">
       <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
            viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
       Colab Tutorial
     </a>
-    <!-- GitHub -->
-    <a style="background:#24292e;color:#fff;" href="https://github.com/stanfordnlp/axbench" target="_blank" rel="noopener">
+    <a class="btn-gh" href="https://github.com/stanfordnlp/axbench" target="_blank" rel="noopener">
       <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.031 1.531 1.031.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.2 22 16.447 22 12.021 22 6.484 17.523 2 12 2z"/></svg>
       GitHub
     </a>
@@ -223,6 +271,7 @@
       <table>
         <thead>
           <tr>
+            <th>#</th>
             <th>Method</th>
             <th>2B L10</th>
             <th>2B L20</th>
@@ -233,92 +282,59 @@
         </thead>
         <tbody>
           <tr>
+            <td>1</td>
             <td>HyperSteer <a href="https://www.arxiv.org/abs/2506.03292" target="_blank" rel="noopener">[Sun et al., 2025]</a></td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
+            <td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td>
           </tr>
           <tr>
+            <td>2</td>
             <td>Prompt</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
+            <td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td>
           </tr>
           <tr>
+            <td>3</td>
             <td>RePS <a href="https://arxiv.org/pdf/2505.20809" target="_blank" rel="noopener">[Wu et al., 2025]</a></td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
+            <td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td>
           </tr>
           <tr>
+            <td>4</td>
             <td>ReFT-r1</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
+            <td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td>
           </tr>
           <tr>
+            <td>5</td>
             <td>SAE (filtered) <a href="https://arxiv.org/abs/2505.20063" target="_blank" rel="noopener">[Arad et al., 2025]</a></td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
+            <td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td>
           </tr>
           <tr>
+            <td>6</td>
             <td>DiffMean</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
+            <td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td>
           </tr>
           <tr>
+            <td>7</td>
             <td>SAE</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
+            <td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td>
           </tr>
           <tr>
+            <td>8</td>
             <td>SAE-A</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
+            <td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td>
           </tr>
           <tr>
+            <td>9</td>
             <td>LAT</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
+            <td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td>
           </tr>
           <tr>
+            <td>10</td>
             <td>PCA</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
+            <td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td>
           </tr>
           <tr>
+            <td>11</td>
             <td>Probe</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
-            <td class="dash">—</td>
+            <td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td>
           </tr>
         </tbody>
       </table>
@@ -334,6 +350,7 @@
       <table>
         <thead>
           <tr>
+            <th>#</th>
             <th>Method</th>
             <th>2B L10</th>
             <th>2B L20</th>
@@ -344,6 +361,7 @@
         </thead>
         <tbody>
           <tr>
+            <td>1</td>
             <td>HyperSteer <a href="https://www.arxiv.org/abs/2506.03292" target="_blank" rel="noopener">[Sun et al., 2025]</a></td>
             <td class="dash">—</td>
             <td><strong>0.742</strong></td>
@@ -352,6 +370,7 @@
             <td><strong>0.917</strong></td>
           </tr>
           <tr>
+            <td>2</td>
             <td>Prompt</td>
             <td>0.698</td>
             <td>0.731</td>
@@ -360,6 +379,7 @@
             <td>0.894</td>
           </tr>
           <tr>
+            <td>3</td>
             <td>RePS <a href="https://arxiv.org/pdf/2505.20809" target="_blank" rel="noopener">[Wu et al., 2025]</a></td>
             <td><strong>0.756</strong></td>
             <td>0.606</td>
@@ -368,6 +388,7 @@
             <td>0.720</td>
           </tr>
           <tr>
+            <td>4</td>
             <td>ReFT-r1</td>
             <td>0.633</td>
             <td>0.509</td>
@@ -376,6 +397,7 @@
             <td>0.543</td>
           </tr>
           <tr>
+            <td>5</td>
             <td>SAE (filtered) <a href="https://arxiv.org/abs/2505.20063" target="_blank" rel="noopener">[Arad et al., 2025]</a></td>
             <td class="dash">—</td>
             <td class="dash">—</td>
@@ -384,6 +406,7 @@
             <td>0.508</td>
           </tr>
           <tr>
+            <td>6</td>
             <td>DiffMean</td>
             <td>0.297</td>
             <td>0.178</td>
@@ -392,6 +415,7 @@
             <td>0.239</td>
           </tr>
           <tr>
+            <td>7</td>
             <td>SAE</td>
             <td>0.177</td>
             <td>0.151</td>
@@ -400,6 +424,7 @@
             <td>0.165</td>
           </tr>
           <tr>
+            <td>8</td>
             <td>SAE-A</td>
             <td>0.166</td>
             <td>0.132</td>
@@ -408,6 +433,7 @@
             <td>0.157</td>
           </tr>
           <tr>
+            <td>9</td>
             <td>LAT</td>
             <td>0.117</td>
             <td>0.130</td>
@@ -416,6 +442,7 @@
             <td>0.127</td>
           </tr>
           <tr>
+            <td>10</td>
             <td>PCA</td>
             <td>0.107</td>
             <td>0.083</td>
@@ -424,6 +451,7 @@
             <td>0.105</td>
           </tr>
           <tr>
+            <td>11</td>
             <td>Probe</td>
             <td>0.095</td>
             <td>0.091</td>
