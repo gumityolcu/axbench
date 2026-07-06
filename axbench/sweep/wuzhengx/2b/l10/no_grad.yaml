@@ -32,7 +32,8 @@ train:
       low_rank_dimension: 1
 inference:
   use_bf16: true
-  models: ["PromptSteering", "DiffMean", "PCA", "LAT", "GemmaScopeSAE"]
+  # models: ["PromptSteering", "DiffMean", "PCA", "LAT", "GemmaScopeSAE"]
+  models: ["DiffMean", "PCA", "LAT", "GemmaScopeSAE"]
   model_name: "google/gemma-2-2b-it"
   # latent related params
   output_length: 128
