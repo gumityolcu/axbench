@@ -174,7 +174,19 @@ class GemmaScopeSAE(Model):
             f"{dump_dir}/{model_name}.pt"
         )
         pt_params = {k: v.to(self.device) for k, v in params.items()}
-        self.make_model(low_rank_dimension=params['W_enc'].shape[1], **kwargs)
+        kwargs = dict(kwargs)
+        inferred_low_rank_dimension = params['W_enc'].shape[1]
+        requested_low_rank_dimension = kwargs.pop("low_rank_dimension", None)
+        if (
+            requested_low_rank_dimension is not None
+            and requested_low_rank_dimension != inferred_low_rank_dimension
+        ):
+            logger.warning(
+                "Ignoring requested low_rank_dimension=%s; using checkpoint dimension=%s instead.",
+                requested_low_rank_dimension,
+                inferred_low_rank_dimension,
+            )
+        self.make_model(low_rank_dimension=inferred_low_rank_dimension, **kwargs)
         if isinstance(self.ax, SubspaceIntervention) or isinstance(self.ax, AdditionIntervention):
             self.ax.proj.weight.data = pt_params['W_dec']
         else:
