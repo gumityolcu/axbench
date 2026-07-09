@@ -1,0 +1,19 @@
+{
+  "model_args": {
+    "latent_dim": 128,
+    "prior": "std",
+    "encoder_hidden_features": [
+      512,
+      512,
+      512,
+      512
+    ],
+    "decoder_hidden_features": [
+      512,
+      512,
+      512,
+      512
+    ]
+  },
+  "beta": 1.0
+}

@@ -1,0 +1,14 @@
+{
+  "model_name": "nice",
+  "model_args": {
+    "hidden_features": [
+      512,
+      512,
+      512,
+      512
+    ],
+    "context": 0,
+    "transforms": 3,
+    "randmask": true
+  }
+}

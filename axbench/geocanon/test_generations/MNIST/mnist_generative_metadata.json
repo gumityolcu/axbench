@@ -1,0 +1,46 @@
+{
+  "dataset": "mnist",
+  "image_shape": [
+    1,
+    28,
+    28
+  ],
+  "input_dim": 784,
+  "epochs": 100,
+  "batch_size": 128,
+  "lr": 0.001,
+  "save_freq": 10,
+  "nf": {
+    "model_name": "nice",
+    "model_args": {
+      "hidden_features": [
+        512,
+        512,
+        512,
+        512
+      ],
+      "context": 0,
+      "transforms": 3,
+      "randmask": true
+    }
+  },
+  "vae": {
+    "model_args": {
+      "latent_dim": 128,
+      "prior": "std",
+      "encoder_hidden_features": [
+        512,
+        512,
+        512,
+        512
+      ],
+      "decoder_hidden_features": [
+        512,
+        512,
+        512,
+        512
+      ]
+    },
+    "beta": 1.0
+  }
+}

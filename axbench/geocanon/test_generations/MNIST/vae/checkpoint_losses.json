@@ -1,0 +1,182 @@
+0[
+  {
+    "epoch": 10,
+    "checkpoint": "epoch10.pt",
+    "train_loss": 740.4206224609375,
+    "train_metrics": {
+      "loss": 740.4206224609375,
+      "reconstruction_nll": 736.0087225260417,
+      "mse": 0.039696233648061754,
+      "kl": 4.411898248545329
+    },
+    "test_loss": 740.4105485351563,
+    "test_metrics": {
+      "loss": 740.4105485351563,
+      "reconstruction_nll": 736.0130822265625,
+      "mse": 0.03970734393000603,
+      "kl": 4.397468203735351
+    }
+  },
+  {
+    "epoch": 20,
+    "checkpoint": "epoch20.pt",
+    "train_loss": 739.933689453125,
+    "train_metrics": {
+      "loss": 739.933689453125,
+      "reconstruction_nll": 735.0044508138021,
+      "mse": 0.03713430890639623,
+      "kl": 4.929239185841878
+    },
+    "test_loss": 740.0070146484375,
+    "test_metrics": {
+      "loss": 740.0070146484375,
+      "reconstruction_nll": 735.106017578125,
+      "mse": 0.03739339499473572,
+      "kl": 4.900999465179443
+    }
+  },
+  {
+    "epoch": 30,
+    "checkpoint": "epoch30.pt",
+    "train_loss": 739.6345893229167,
+    "train_metrics": {
+      "loss": 739.6345893229167,
+      "reconstruction_nll": 734.6365193033854,
+      "mse": 0.03619570610125859,
+      "kl": 4.998068884531657
+    },
+    "test_loss": 739.6932947265625,
+    "test_metrics": {
+      "loss": 739.6932947265625,
+      "reconstruction_nll": 734.7091076171876,
+      "mse": 0.036380878627300266,
+      "kl": 4.984187898254395
+    }
+  },
+  {
+    "epoch": 40,
+    "checkpoint": "epoch40.pt",
+    "train_loss": 739.5341949869792,
+    "train_metrics": {
+      "loss": 739.5341949869792,
+      "reconstruction_nll": 734.4376904296874,
+      "mse": 0.03568849018216133,
+      "kl": 5.096506736755371
+    },
+    "test_loss": 739.59671015625,
+    "test_metrics": {
+      "loss": 739.59671015625,
+      "reconstruction_nll": 734.5217544921875,
+      "mse": 0.03590294510126114,
+      "kl": 5.074958786010742
+    }
+  },
+  {
+    "epoch": 50,
+    "checkpoint": "epoch50.pt",
+    "train_loss": 739.5028992513021,
+    "train_metrics": {
+      "loss": 739.5028992513021,
+      "reconstruction_nll": 734.3787837565104,
+      "mse": 0.035538224132855734,
+      "kl": 5.1241119255065914
+    },
+    "test_loss": 739.573876171875,
+    "test_metrics": {
+      "loss": 739.573876171875,
+      "reconstruction_nll": 734.4679056640625,
+      "mse": 0.03576555979847908,
+      "kl": 5.105976127624512
+    }
+  },
+  {
+    "epoch": 60,
+    "checkpoint": "epoch60.pt",
+    "train_loss": 739.3877789388021,
+    "train_metrics": {
+      "loss": 739.3877789388021,
+      "reconstruction_nll": 734.1977109700521,
+      "mse": 0.0350762998064359,
+      "kl": 5.190065907287598
+    },
+    "test_loss": 739.437865625,
+    "test_metrics": {
+      "loss": 739.437865625,
+      "reconstruction_nll": 734.2756403320312,
+      "mse": 0.035275088274478915,
+      "kl": 5.162231600952149
+    }
+  },
+  {
+    "epoch": 70,
+    "checkpoint": "epoch70.pt",
+    "train_loss": 739.3670169921875,
+    "train_metrics": {
+      "loss": 739.3670169921875,
+      "reconstruction_nll": 734.1709505208333,
+      "mse": 0.03500803322593371,
+      "kl": 5.196066672770182
+    },
+    "test_loss": 739.48072578125,
+    "test_metrics": {
+      "loss": 739.48072578125,
+      "reconstruction_nll": 734.3129674804687,
+      "mse": 0.03537032704949379,
+      "kl": 5.167759671020508
+    }
+  },
+  {
+    "epoch": 80,
+    "checkpoint": "epoch80.pt",
+    "train_loss": 739.3234443033854,
+    "train_metrics": {
+      "loss": 739.3234443033854,
+      "reconstruction_nll": 734.12804921875,
+      "mse": 0.03489859255949656,
+      "kl": 5.195394013214111
+    },
+    "test_loss": 739.4324005859374,
+    "test_metrics": {
+      "loss": 739.4324005859374,
+      "reconstruction_nll": 734.259433984375,
+      "mse": 0.035233759599924086,
+      "kl": 5.17296548614502
+    }
+  },
+  {
+    "epoch": 90,
+    "checkpoint": "epoch90.pt",
+    "train_loss": 739.2768310221354,
+    "train_metrics": {
+      "loss": 739.2768310221354,
+      "reconstruction_nll": 734.1099994140625,
+      "mse": 0.03485254026055336,
+      "kl": 5.166833027648925
+    },
+    "test_loss": 739.400043359375,
+    "test_metrics": {
+      "loss": 739.400043359375,
+      "reconstruction_nll": 734.2664357421875,
+      "mse": 0.03525161410570145,
+      "kl": 5.1336141723632815
+    }
+  },
+  {
+    "epoch": 100,
+    "checkpoint": "epoch100.pt",
+    "train_loss": 739.3592276041667,
+    "train_metrics": {
+      "loss": 739.3592276041667,
+      "reconstruction_nll": 734.163983235677,
+      "mse": 0.03499025828242302,
+      "kl": 5.19524423828125
+    },
+    "test_loss": 739.4418352539062,
+    "test_metrics": {
+      "loss": 739.4418352539062,
+      "reconstruction_nll": 734.2691572265625,
+      "mse": 0.03525855932831764,
+      "kl": 5.172677130126953
+    }
+  }
+]

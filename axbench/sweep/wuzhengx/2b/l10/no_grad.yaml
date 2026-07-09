@@ -10,6 +10,7 @@ generate:
   seed: 42
 train:
   model_name: "google/gemma-2-2b-it"
+  output_length: 128
   layer: 10
   component: "res"
   seed: 42
@@ -55,7 +56,8 @@ inference:
   # generation related params
   temperature: 1.0
 evaluate:
-  models: ["PromptSteering", "DiffMean", "PCA", "LAT", "GemmaScopeSAE"]
+  # models: ["PromptSteering", "DiffMean", "PCA", "LAT", "GemmaScopeSAE"]
+  models: ["DiffMean", "PCA", "LAT", "GemmaScopeSAE"]
   latent_evaluators: [
     "AUCROCEvaluator",
     "HardNegativeEvaluator",
