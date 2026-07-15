@@ -107,6 +107,8 @@ class GaussianVAE(nn.Module):
         beta: float = 1.0,
     ) -> None:
         super().__init__()
+        self.input_dim = input_dim
+        self.latent_dim = latent_dim
 
         self.encoder = GaussianEncoder(
                 features=latent_dim,
@@ -124,49 +126,114 @@ class GaussianVAE(nn.Module):
             torch.tensor(beta, dtype=torch.get_default_dtype()),
         )
 
-    def forward(self, x: Tensor) -> dict[str, Tensor]:
+    def reconstruction_terms(self, x: Tensor) -> dict[str, Tensor]:
         q = self.encoder(x)
         z = q.rsample()
-
         p_x_given_z = self.decoder(z)
-
-        # Shape: [batch]
         reconstruction_log_likelihood = p_x_given_z.log_prob(x)
-
-        # q is Independent(Normal(...), 1).
         mean = q.base_dist.loc
         std = q.base_dist.scale
         log_std = std.log()
 
         if isinstance(self.prior, zuko.lazy.UnconditionalDistribution):
-            # Exact KL(q(z | x) || N(0, I)).
             kl = 0.5 * (
                 mean.square()
                 + std.square()
-                - 1.0 # becomes -1*latent_dim when summed over latent dimension
-                - 2.0 * log_std # -2 because std instead of variance
+                - 1.0
+                - 2.0 * log_std
             ).sum(dim=-1)
         else:
-            # Monte Carlo estimate of KL(q(z | x) || p(z)).
             kl = q.log_prob(z) - self.prior.log_prob(z)
 
-        negative_elbo = (
-            -reconstruction_log_likelihood
-            + self.beta * kl
+        reconstruction_nll = -reconstruction_log_likelihood
+        reconstruction_mean = p_x_given_z.mean
+        return {
+            "reconstruction_nll": reconstruction_nll.mean(),
+            "mse": (reconstruction_mean - x).square().mean(),
+            "kl": kl.mean(),
+            "z_mean": mean,
+        }
+
+    def forward(self, x: Tensor) -> dict[str, Tensor]:
+        terms = self.reconstruction_terms(x)
+        terms["loss"] = terms["reconstruction_nll"] + self.beta * terms["kl"]
+        return terms
+
+
+class ClassifiedGaussianVAE(GaussianVAE):
+    def __init__(
+        self,
+        input_dim: int,
+        latent_dim: int,
+        prior: str = "std",
+        encoder_hidden_features: Sequence[int] = (1024, 1024),
+        decoder_hidden_features: Sequence[int] = (1024, 1024),
+        beta: float = 1.0,
+        reconstruction_lambda: float = 1.0,
+        classification_lambda: float = 1.0,
+    ) -> None:
+        super().__init__(
+            input_dim=input_dim,
+            latent_dim=latent_dim,
+            prior=prior,
+            encoder_hidden_features=encoder_hidden_features,
+            decoder_hidden_features=decoder_hidden_features,
+            beta=beta,
+        )
+        self.classifier = nn.Linear(latent_dim, 1)
+        self.register_buffer(
+            "reconstruction_lambda",
+            torch.tensor(reconstruction_lambda, dtype=torch.get_default_dtype()),
+        )
+        self.register_buffer(
+            "classification_lambda",
+            torch.tensor(classification_lambda, dtype=torch.get_default_dtype()),
         )
 
-        reconstruction_mean = p_x_given_z.mean
-
+    def _classification_from_mean(
+        self,
+        mean: Tensor,
+        labels: Tensor,
+    ) -> dict[str, Tensor]:
+        logits = self.classifier(mean).squeeze(-1)
+        labels = labels.to(device=mean.device, dtype=logits.dtype)
+        classification_loss = nn.functional.binary_cross_entropy_with_logits(logits, labels)
         return {
-            "loss": negative_elbo.mean(),
-            "reconstruction_nll": (
-                -reconstruction_log_likelihood
-            ).mean(),
-            "mse": (
-                reconstruction_mean - x
-            ).square().mean(),
-            "kl": kl.mean(),
+            "classification_loss": classification_loss,
+            "classification_accuracy": ((logits > 0) == (labels > 0.5)).float().mean(),
+            "logits": logits,
         }
+
+    def classification_terms(self, x: Tensor, labels: Tensor) -> dict[str, Tensor]:
+        return self._classification_from_mean(self.encoder(x).base_dist.loc, labels)
+
+    def objective(
+        self,
+        reconstruction: dict[str, Tensor],
+        classification_loss: Tensor,
+    ) -> Tensor:
+        # Per-dimension means keep the three configured weights on comparable scales.
+        return (
+            self.reconstruction_lambda
+            * reconstruction["reconstruction_nll"]
+            / self.input_dim
+            + self.beta * reconstruction["kl"] / self.latent_dim
+            + self.classification_lambda * classification_loss
+        )
+
+    def forward(self, x: Tensor, labels: Tensor | None = None) -> dict[str, Tensor]:
+        terms = self.reconstruction_terms(x)
+        if labels is None:
+            zero = torch.zeros((), device=x.device, dtype=x.dtype)
+            classification = {
+                "classification_loss": zero,
+                "classification_accuracy": zero,
+                "logits": self.classifier(terms["z_mean"]).squeeze(-1),
+            }
+        else:
+            classification = self._classification_from_mean(terms["z_mean"], labels)
+        loss = self.objective(terms, classification["classification_loss"])
+        return {"loss": loss, **terms, **classification}
 
 
 def evaluate_loss(

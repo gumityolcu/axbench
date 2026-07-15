@@ -40,6 +40,10 @@ logger = logging.getLogger(__name__)
 CONFIG_FILE = "config.json"
 STATE_FILE = "train_state.pkl"
 METADATA_FILE = "metadata.jsonl"
+VAE_MODELS = {"VanillaVAE", "AuxiliaryVAE"}
+NON_BF16_MODELS = {
+    "LoReFT", "LoRA", "SFT", "BoW", "PreferenceLoReFT", "ConceptLoReFT"
+} | VAE_MODELS
 
 
 def data_generator(data_dir, use_dpo_loss=False):
@@ -460,8 +464,9 @@ def main():
                 dropout=args.models[model_name].dropout,
                 intervention_positions_dropout=args.models[model_name].intervention_positions_dropout,
                 preference_pairs=args.models[model_name].preference_pairs,
+                lm_model_name=args.model_name,
             )
-            if model_name not in {"LoReFT", "LoRA", "SFT", "BoW", "PreferenceLoReFT", "ConceptLoReFT"} and args.use_bf16:
+            if model_name not in NON_BF16_MODELS and args.use_bf16:
                 if isinstance(benchmark_model.ax, list):
                     for ax in benchmark_model.ax:
                         ax.to(torch.bfloat16)
@@ -488,7 +493,7 @@ def main():
             prepared_df = concept_df.copy()
             prepared_df = prepare_df(
                 prepared_df, negative_df, concept, metadata[concept_id], tokenizer, 
-                binarize=args.models[model_name].binarize_dataset, 
+                binarize=model_name in VAE_MODELS or args.models[model_name].binarize_dataset,
                 train_on_negative=args.models[model_name].train_on_negative,
                 use_dpo_loss=args.use_dpo_loss,
                 is_chat_model=is_chat_model,
@@ -662,4 +667,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

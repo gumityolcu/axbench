@@ -80,6 +80,16 @@ class ModelParams:
     hypernet_name_or_path: Optional[str] = None
     hypernet_initialize_from_pretrained: Optional[bool] = True
     num_hidden_layers: Optional[int] = None
+    vae_architecture: Optional[str] = "small"
+    vae_latent_dim: Optional[int] = None
+    vae_kl_lambda: Optional[float] = 1.0
+    vae_reconstruction_lambda: Optional[float] = 1.0
+    vae_classification_lambda: Optional[float] = 1.0
+    vae_activation_batch_size: Optional[int] = None
+    vae_auxiliary_data_path: Optional[str] = None
+    vae_auxiliary_text_column: Optional[str] = "text"
+    vae_auxiliary_max_examples: Optional[int] = None
+    vae_auxiliary_prefix_length: Optional[int] = 1
 
 class TrainingArgs:
     def __init__(
@@ -126,7 +136,11 @@ class TrainingArgs:
             'train_on_negative', 'use_synergy', 'bow_penalty', 'bow_C', 'loss_type', 'beta', 'gemma', 
             'reference_free', 'label_smoothing', 'steering_factors', 'negative_only', 'simpo_scaler', 
             'intervention_positions_dropout', 'dropout', 'preference_pairs', 'steering_prompt_type',
-            'hypernet_name_or_path', 'hypernet_initialize_from_pretrained', "num_hidden_layers"
+            'hypernet_name_or_path', 'hypernet_initialize_from_pretrained', "num_hidden_layers",
+            'vae_architecture', 'vae_latent_dim', 'vae_kl_lambda', 'vae_reconstruction_lambda',
+            'vae_classification_lambda', 'vae_activation_batch_size', 'vae_auxiliary_data_path',
+            'vae_auxiliary_text_column', 'vae_auxiliary_max_examples',
+            'vae_auxiliary_prefix_length'
         ]
         all_params = global_params + hierarchical_params
 
@@ -260,17 +274,21 @@ class TrainingArgs:
         bool_params = ['use_bf16', 'exclude_bos', 'binarize_dataset', 'train_on_negative', 
                        'use_synergy', 'use_dpo_loss', 'use_wandb', 'reference_free', 'negative_only']
         int_params = ['layer', 'batch_size', 'n_epochs', 'topk', 'seed', 'low_rank_dimension', 
-                      'gradient_accumulation_steps', 'lora_alpha', 'max_concepts', 'max_num_of_examples', 'output_length']
+                      'gradient_accumulation_steps', 'lora_alpha', 'max_concepts', 'max_num_of_examples', 'output_length',
+                      'vae_latent_dim', 'vae_activation_batch_size', 'vae_auxiliary_max_examples',
+                      'vae_auxiliary_prefix_length']
         float_params = [
             'lr', 'coeff_l1_loss_null', 'coeff_l1_loss', 'coeff_l2_loss', 'coeff_norm_loss', 
             'coeff_latent_l1_loss', 'weight_decay', 'temperature_start', 'temperature_end', 
-            'bow_C', 'beta', 'gemma', 'label_smoothing', 'simpo_scaler', 'dropout', 'intervention_positions_dropout']
+            'bow_C', 'beta', 'gemma', 'label_smoothing', 'simpo_scaler', 'dropout', 'intervention_positions_dropout',
+            'vae_kl_lambda', 'vae_reconstruction_lambda', 'vae_classification_lambda']
         str_params = [
             'concept_path', 'model_name', 'component', 
             'data_dir', 'dump_dir', 'run_name', 'dataset_category', 'intervention_positions',
             'intervention_type', 'reft_positions', 'reft_type', 'overwrite_data_dir',
             'overwrite_metadata_dir', 'overwrite_inference_data_dir', 'bow_penalty', 'loss_type',
-            'wandb_project', 'wandb_name', 'steering_prompt_type']
+            'wandb_project', 'wandb_name', 'steering_prompt_type', 'vae_architecture',
+            'vae_auxiliary_data_path', 'vae_auxiliary_text_column']
         list_params = ['intervention_layers', 'reft_layers', 'lora_layers', 'lora_components', 'steering_factors', 'preference_pairs']
 
         if param_name in int_params:
